@@ -10,8 +10,21 @@ exports.parser = function(callback) {
 
 	
 	var categoryObj = {
+		'Grocery' : [],
 		'Food' : [],
-		'Clothing' : []
+		'Gas' : [],
+		'Technology' : [],
+		'Automobile' : [],
+		'Parking' : [],
+		'Payment' : [],
+		'Airline' : [],
+		'Groupon' : [],
+		'Gym' : [],
+		'Transportation' : [],
+		'Invalid' : [],
+		'Apparel' : [],
+		'Travel' : [],
+		'Coffee' : []
 	};
 	
 	var readFile = function(index) {
@@ -27,12 +40,12 @@ exports.parser = function(callback) {
 				if (first) {
 					first = false;
 				} else {
-					line = line.trim().split(",");
-					var date = line[0];
-					var name = line[1].replace(/"/g, "");
-					var price = line[3];
-					var category = line[4];
-					return;
+					var lineArray = line.trim().split(",");
+					var date = lineArray[0];
+					var name = lineArray[1].replace(/"/g, "");
+					var price = lineArray[3];
+					var category = lineArray[4];
+
 					if (category in categoryObj) {
 						categoryObj[category].push({
 							'name' : name,
