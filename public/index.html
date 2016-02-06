@@ -1,0 +1,36 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<title>Title of the document</title>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0-beta1.min.js"></script>
+		<script>
+			$(document).ready(function() {
+			
+				$.ajax({
+					type: "POST",
+					url: "https://api.finicity.com/aggregation/v2/partners/authentication",
+					dataType: "xml",
+					contentType: "application/xml",
+					data : '<credentials><partnerId>2445581430647</partnerId><partnerSecret>v09TAUzbYsfKnbTFOGn0</partnerSecret></credentials>',
+					headers: { 'Finicity-App-Key': 'a0874b0eda76ae7918c779f8eeef92c1a' },
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('Finicity-App-Key', 'a0874b0eda76ae7918c7798eeef92c1a');
+						xhr.setRequestHeader('Content-Type', 'application/xml');
+					},
+					success: function(response){
+						alert(response);
+					},
+					error: function(xhr,status,error){
+						alert("Error:" + JSON.stringify(xhr));
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		The content of the document......
+	</body>
+
+</html> 
