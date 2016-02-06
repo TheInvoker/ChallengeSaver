@@ -39,6 +39,80 @@
 }
 }
 
+h2.challenge-title {
+  font-weight:600;
+  font-size:20px;
+  padding:10px 0;
+  text-align:center;
+}
+
+.card-hor-scroll {
+    width:auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.card {
+  border:2px solid @brand-primary;
+  border-radius:8px;
+  display: inline-block;
+    vertical-align: middle;
+    margin-left:10px;
+    max-width:90%;
+    min-height:200px;
+    word-wrap: break-word;
+}
+
+.word-wrap-normal {
+    white-space: normal;
+}
+
+.card-header {
+  background: @brand-primary;
+  padding:18px 8px 4px 8px;
+  min-height:40px;
+}
+
+
+.card-title {
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  min-height:40px;
+  display:inline-block;
+}
+
+.card-title-icon {
+    display: inline-block;
+    float: right;
+}
+
+.card-content {
+  padding:12px 8px;
+}
+
+.content-text {
+  color:@brand-primary;
+  font-size:18px;
+  display:block;
+  padding-bottom:15px;
+  font-weight:600;
+}
+
+.content-progress {
+  display:block;
+  padding-bottom:15px;
+}
+
+.content-text-lower {
+  color:#888;
+  font-size:16px;
+  font-weight:600;
+  display:block;
+
+}
+
 
     /*
      * Main content
@@ -118,10 +192,14 @@
 .snap-content, snap-content {
     overflow-x: hidden;
 }
+
+.snap-content h1, .snap-content p, .snap-content div {
+  color: @brand-primary;
+}
 snap-content {
-    background: @brand-primary;
+    background: #fff;;
     a {
-        color: white;
+        color: @brand-primary;
         &:hover,&:active,&:focus {
             color: white;
         }

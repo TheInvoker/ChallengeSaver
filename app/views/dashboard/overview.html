@@ -8,7 +8,6 @@
 				<li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">HOME</a></li>
 				<li ng-class="{active: $state.includes('reports')}"><a ui-sref="reports">REPORTS</a></li>
 				<li><a ui-sref="login">LOGOUT</a></li>
-				<li><a href="http://strapui.com">MORE PREMIUM THEMES</a></li>
 			</ul>
 		</div>
 	</snap-drawer>
@@ -23,17 +22,50 @@
 		</a>
 		
 		<div class="fr">
-		<h2>Overview <small>Why is Versatile Theme so awesome?</small></h2>
+		<h3>Overview</h3>
 		</div>
-		<div class="jumbotron">
 			<div class="container">
-				<h1>Welcome!</h1>
-				I don't want to bloat this Versatile Theme Free Edition AngularJS Admin theme with a lot of plugins. To install plugins we have bower. Let's keep it real clean!<br /><br />
-				<p>
-					<a ui-sref="login" class="btn btn-primary btn-lg btn-white">Logout</a>
-				</p>
+				<h2 class="challenge-title">Here are this week's challenges</h2>
 				
+				<div class="card-hor-scroll">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Coffee</div>
+							<div class="card-title-icon"><img src="images/coffee-icon.png"></div>
+						</div>
+						<div class="card-content">
+							<span class="content-text">Buy coffee only twice this week</span>
+							<span class="content-progress"><progress></progress>1<span>/</span>2</span>
+							<span class="content-text-lower">You last bought coffee last Tuesday</span>
+						</div>
+					</div>
+
+
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Grocery</div>
+							<div class="card-title-icon"><img src="images/grocery-icon.png"></div>
+						</div>
+						<div class="card-content word-wrap-normal">
+							<span class="content-text">Spend under $50 on your grocery trip</span>
+							<span class="content-text-lower">Save $9.00 compared to your last grocery trip</span>
+						</div>
+					</div>	
+
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Coffee</div>
+							<div class="card-title-icon"><img src="images/coffee-icon.png"></div>
+						</div>
+						<div class="card-content">
+							<span class="content-text">Buy coffee only twice this week</span>
+							<span class="content-progress"><progress></progress>1<span>/</span>2</span>
+							<span class="content-text-lower">You last bought coffee last Tuesday</span>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+				
+	
 	</snap-content>	
 </div>
