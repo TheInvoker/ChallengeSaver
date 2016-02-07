@@ -45,8 +45,8 @@ function convertBintoNet(bin) {
 	return numB;
 }
 
-var returnData = {};
-		
+
+var userData = {};
 parser.parser(function(categoryObj) {
 	
 	var total = 0;
@@ -83,11 +83,15 @@ parser.parser(function(categoryObj) {
 	}
 	var dropratio = debt / posnet;
 	
+	var returnData = {};
 	for (category in categoryObj) {
 		var s = categoryObj[category].avgprice * dropratio;
 		returnData[category] = s;
 	}
-	
+	userData = {
+		'netData' : newData,
+		'limits' : returnData
+	};
 	
 	
 	/*
@@ -476,7 +480,7 @@ io.on('connection', function(socket){
 	console.log("a user connected");
 
 	socket.on('getChallenge', function() {
-		socket.emit('getChallengeSuccess', returnData);
+		socket.emit('getChallengeSuccess', userData);
 	});
 	
 	socket.on('disconnect', function() {

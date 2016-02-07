@@ -6,34 +6,90 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0-beta1.min.js"></script>
 		<script type="text/javascript" src="chartist.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="chartist.min.css">
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		
+		<style>
+			body {
+				overflow-y: hidden;
+			}
+			#chart-container {
+				overflow-x: scroll;
+				overflow-y: hidden;
+				width:100%;
+			}
+			#my-chart {
+				width:1000px;
+			}
+			div.card {
+				width:100px;
+				height:
+			}
+		</style>
 		
 		<script>
 			$(document).ready(function() {
-			
-				$.ajax({
-					type: "POST",
-					url: "https://api.finicity.com/aggregation/v2/partners/authentication",
-					dataType: "xml",
-					contentType: "application/xml",
-					data : '<credentials><partnerId>2445581430647</partnerId><partnerSecret>v09TAUzbYsfKnbTFOGn0</partnerSecret></credentials>',
-					headers: { 'Finicity-App-Key': 'a0874b0eda76ae7918c779f8eeef92c1a' },
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('Finicity-App-Key', 'a0874b0eda76ae7918c7798eeef92c1a');
-						xhr.setRequestHeader('Content-Type', 'application/xml');
-					},
-					success: function(response){
-						alert(response);
-					},
-					error: function(xhr,status,error){
-						alert("Error:" + JSON.stringify(xhr));
+							
+				/* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
+				var options = {
+					axisX: {
+						labelInterpolationFnc: function(value) {
+							return 'Calendar Week ' + value;
+						}
 					}
-				});
+				};
+							
+				var points = [-10, -8, -5, -12, -8, -4];
+				var maxPoint = Math.max.apply(Math,points);
+				var minPoint = Math.min.apply(Math,points);
+				if (maxPoint < 0) {
+					options.high = 0;
+				} else if (minPoint > 0) {
+					options.low = 0;
+				}
+							
+				/* Add a basic data series with six labels and values */
+				var data = {
+				  labels: ['1', '2', '3', '4', '5', '6'],
+				  series: [
+					{
+					  data: points
+					}
+				  ]
+				};
+
+
+
+				/* Now we can specify multiple responsive settings that will override the base settings based on order and if the media queries match. In this example we are changing the visibility of dots and lines as well as use different label interpolations for space reasons. */
+				var responsiveOptions = [
+				  ['screen and (min-width: 641px) and (max-width: 1024px)', {
+					showPoint: true,
+					axisX: {
+					  labelInterpolationFnc: function(value) {
+						return 'Week ' + value;
+					  }
+					}
+				  }],
+				  ['screen and (max-width: 640px)', {
+					showLine: true,
+					axisX: {
+					  labelInterpolationFnc: function(value) {
+						return 'W' + value;
+					  }
+					}
+				  }]
+				];
+
+				/* Initialize the chart with the above settings */
+				new Chartist.Line('#my-chart', data, options, responsiveOptions);
 			});
 		</script>
 	</head>
 
 	<body>
-		The content of the document......
+		<div id="chart-container">
+			<div id="my-chart"></div>
+		</div>
+		<div class='card'></div><div class='card'></div>
 	</body>
 
 </html> 
