@@ -10,6 +10,8 @@
 		<!--<link rel="stylesheet" type="text/css" href="chartist.min.css">-->
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		
 		<style>
 			
 			body {
@@ -327,6 +329,17 @@
 
 				}
 				
+				
+				
+				
+				
+				var socket = io();
+				socket.on('getChallengeSuccess', function(data) {
+					alert(JSON.stringify(data));
+				});
+				socket.on('setCategoriesSuccess', function(data) {
+				});
+				socket.emit('getChallenge', {});
 				
 			});
 		</script>

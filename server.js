@@ -56,7 +56,10 @@ function diffDays(date1, date2) {
 	//alert(diffDays);
 	return diffDays;
 }
-
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+}
 
 var userDownloadData = {};
 var expiredData = true;
@@ -88,7 +91,7 @@ function checkData(callback) {
 			var items = categoryObj[category].list;
 			for(var i=0; i<items.length; i+=1) {
 				net += -items[i].price;
-				xs.push(items[i].date);
+				xs.push(items[i].date.toString());
 				ys.push(net);
 				
 				if (items[i].name in nameList) {
@@ -124,20 +127,31 @@ function checkData(callback) {
 		// randomize category list
 		var categoryObjList = [];
 		for (category in categoryObj) {
+			
+
+			
+			categoryObj[category].name = category;
+			//console.log(JSON.stringify(categoryObj[category]));
+			//return;
+			
 			categoryObjList.push(categoryObj[category]);
 		}
-		categoryObjList.shuffle();
+		categoryObjList = shuffle(categoryObjList);
 		
-		
+		//return;
 		
 		
 		var usedCategories = 0;
 		for(var i=0; i<categoryObjList.length; i+=1) {
 			var category = categoryObjList[i];
+			var categoryName = category.name;
 			
-			if (Object.keys(categoryIncludeList).length==0 || category in categoryIncludeList) {
+			//console.log(categoryName);
+			//return;
+			
+			if (Object.keys(categoryIncludeList).length==0 || categoryName in categoryIncludeList) {
 				
-				var items = categoryObj[category].list;
+				var items = category.list;
 				
 				
 				// calculate average price per category for items that you payed for and in last 7 days
@@ -159,29 +173,29 @@ function checkData(callback) {
 				avg = (cnt > 0) ? (avg/cnt) : cnt;
 				
 				// calculate top message
-				if (category=="Coffee" || category=="Food") {
+				if (categoryName=="Coffee" || categoryName=="Food") {
 					
 					var curentNum = cntThisWeek;
 					
-					var intent = category=="Coffee" ? "Buy " : "Bring ";
+					var intent = categoryName=="Coffee" ? "Buy " : "Bring ";
 					
 					if (Math.random() < 0.45) {
-						var topMessage = intent + category + " once this week.";
+						var topMessage = intent + categoryName + " once this week.";
 						var maxNum = curentNum + 1;
 						var t = 1;
 					} else if (Math.random() < 0.75) {
-						var topMessage = intent + category + " twice this week.";
+						var topMessage = intent + categoryName + " twice this week.";
 						var maxNum = curentNum + 2;
 						var t = 2;
 					} else {
-						var topMessage = intent + category + " three times this week.";
+						var topMessage = intent + categoryName + " three times this week.";
 						var maxNum = curentNum + 3;
 						var t = 3;
 					}
 					
 					var saving = Math.ceil(avg*0.1) * t;
 					
-					if (category=="Food") {
+					if (categoryName=="Food") {
 						var botMessage = "Did you know you spend about $" + avg + + " each meal.";
 					} else {
 						var botMessage = "You will save $" + saving + " this week.";
@@ -192,14 +206,14 @@ function checkData(callback) {
 					var topMessage = "Spend under " + saving + " on this trip.";
 					var curentNum = null;
 					var maxNum = null;
-					var botMessage = (lstItem==null) ? "" : "You spent $" + lstItem.price + " on " + category + ".";
+					var botMessage = (lstItem==null) ? "" : "You spent $" + lstItem.price + " on " + categoryName + ".";
 				}
 				
 				
 				
 				// store data
-				userData[category] = {
-					'className' : category.toLowerCase() + "-icon",
+				userData[categoryName] = {
+					'className' : categoryName.toLowerCase() + "-icon",
 					'topMessage' : topMessage,
 					'curentNum' : curentNum,
 					'maxNum' : maxNum,
@@ -618,7 +632,7 @@ var io = require('socket.io').listen(backServer);
 io.on('connection', function(socket){
 	console.log("a user connected");
 
-	socket.on('getChallenge', function() {
+	socket.on('getChallenge', function(data) {
 		
 		if (expiredData) {
 			checkData(function(userDownloadData) {
