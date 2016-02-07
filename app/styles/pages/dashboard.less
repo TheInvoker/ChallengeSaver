@@ -45,7 +45,7 @@ h2.challenge-title {
   text-align:center;
   padding: 20px 0 20px 0;
   border-bottom: 1px solid rgba(0,0,0,0.12);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .card-hor-scroll {
@@ -55,6 +55,7 @@ h2.challenge-title {
     overflow-y: hidden;
     white-space: nowrap;
     padding: 30px 0;
+    display: none;
 }
 
 .card {
@@ -63,7 +64,8 @@ h2.challenge-title {
   display: inline-block;
     vertical-align: middle;
     margin-left:10px;
-    max-width:90%;
+    width:90%;
+    max-width:300px;
     min-height:200px;
     word-wrap: break-word;
     text-align:left;
@@ -96,7 +98,7 @@ h2.challenge-title {
 .card-content {
   padding:5px 14px;
   white-space: pre-line;
-  min-height:170px;
+  min-height:235px;
 }
 
 .content-text {
@@ -108,6 +110,7 @@ h2.challenge-title {
 
 .content-progress {
   display:block;
+  font-size:16px;
 }
 
 .content-text-lower {
@@ -117,6 +120,42 @@ h2.challenge-title {
   display:block;
 
 }
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+  width: 240px;
+  height: 20px;
+}
+
+
+.countdown {
+  text-align:center;
+  background:rgba(0,0,0,0.05);
+  padding:0px 10px 15px 10px;
+  margin-top:25px;
+}
+
+.countdown span.days {
+  font-size:20px;
+  display:block;
+  /*background:@brand-primary;*/
+  color:#777;
+  font-weight:700;
+  padding:20px 10px 10px 10px;
+  width:50%;
+  letter-spacing: 8px;
+  margin:0 auto;
+}
+
+
 
 
     /*
@@ -280,4 +319,113 @@ snap-drawer {
   .challenge-title {
     margin:45px 0 25px 0!important;
   }
+
+  .countdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width:100%;
+    margin-top:0!important;
+    padding:10px 10px 22px 10px;
+    z-index: -1;
+  }
+
+  .container.content {
+    margin-top:36px;
+  }
+
+}
+
+.card-container {
+  width:100%;
+  max-width:340px;
+  display:inline-block;
+  height:300px;
+}
+
+button.mark-complete {
+    background: #797979;
+    padding: 10px 35px;
+    font-size: 20px;
+    margin: 0 auto;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-left: 20px;
+    color: #fff;
+    border: 0px transparent none;
+}
+
+h2.seperator-title {
+  color:#fff;
+  font-weight:600;
+  font-size:20px;
+  text-align:center;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.82);
+  margin-bottom: 20px;
+}
+
+ul.pref-icons {
+  list-style:none;
+  margin:0 auto;
+  padding-top:20px;
+}
+
+li.cat-icons {
+  display:inline-block;
+  color:#fff;
+  font-size:30px;
+  border:2px solid #fff;
+  border-radius:10px;
+  margin-right:20px;
+}
+
+#ck-button {
+    border-radius:10px;
+    overflow:auto;
+    float:left;
+
+
+}
+
+#ck-button label {
+    float:left;
+    color:#fff;
+
+}
+
+#ck-button label span {
+    text-align:center;
+    display:block;
+
+    padding:20px;
+}
+
+#ck-button label input {
+    position:absolute;
+    top:-20px;
+}
+
+#ck-button input:hover + span {
+    background-color:none;
+}
+
+#ck-button input:checked + span {
+    background-color:none;
+    color:#fff;
+}
+
+#ck-button input:checked:hover + span {
+    background-color:#fff;
+    color:@brand-primary;
+}
+
+.chart-container {
+
+}
+#chart-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width:100%;
+  text-align: center;
 }

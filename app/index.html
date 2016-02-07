@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>DebtHack App</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.tmp) styles/vendor.css -->
     <!-- bower:css -->
@@ -14,6 +14,16 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+
+      
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0-beta1.min.js"></script>
+    <script src="../bower_components/Chart.js/Chart.min.js"></script>
+
+    <script type="text/javascript" src=" https://cdn.rawgit.com/nnattawat/flip/v1.0.19/dist/jquery.flip.min.js"></script>
+
+
+
+    
     <!-- endbuild -->
   </head>
   <body ng-app="yapp">
@@ -59,9 +69,13 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/chart-r.js"></script>
+  
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/join.js"></script>
     <script src="scripts/controllers/dashboard.js"></script>
     <!-- endbuild -->
+
+
   </body>
 </html>
