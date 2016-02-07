@@ -83,11 +83,6 @@ parser.parser(function(categoryObj) {
 	}
 	var dropratio = debt / posnet;
 	
-	console.log(net);
-	console.log(debt);
-	console.log(posnet);
-	console.log(dropratio);
-	
 	for (category in categoryObj) {
 		var s = categoryObj[category].avgprice * dropratio;
 		returnData[category] = s;
