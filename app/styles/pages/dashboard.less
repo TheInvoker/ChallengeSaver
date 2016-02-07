@@ -45,7 +45,7 @@ h2.challenge-title {
   text-align:center;
   padding: 20px 0 20px 0;
   border-bottom: 1px solid rgba(0,0,0,0.12);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .card-hor-scroll {
@@ -138,7 +138,8 @@ progress[value] {
 .countdown {
   text-align:center;
   background:rgba(0,0,0,0.05);
-  padding:10px 10px 25px 10px;
+  padding:0px 10px 15px 10px;
+  margin-top:25px;
 }
 
 .countdown span.days {
@@ -152,45 +153,7 @@ progress[value] {
   letter-spacing: 8px;
   margin:0 auto;
 }
-.flip {
-  -webkit-perspective: 800;
-    position: relative;
-    margin: 50px auto;
-}
-.flip .card.flipped {
-  -webkit-transform: rotatex(-180deg);
-}
-.flip .card {
-  width: 100%;
-  height: 100%;
-  -webkit-transform-style: preserve-3d;
-  -webkit-transition: 0.5s;
-}
-.flip .card .face {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  -webkit-backface-visibility: hidden ;
-  z-index: 2;
-    font-family: Georgia;
-    font-size: 3em;
-    text-align: center;
-    line-height: 200px;
-}
-.flip .card .front {
-  position: absolute;
-  z-index: 1;
-    background: black;
-    color: white;
-    cursor: pointer;
-}
-.flip .card .back {
-  -webkit-transform: rotatex(-180deg);
-    background: blue;
-    background: white;
-    color: black;
-    cursor: pointer;
-}
+
 
 
 
@@ -361,7 +324,8 @@ snap-drawer {
     top: 0;
     right: 0;
     width:100%;
-    padding-bottom:22px;
+    margin-top:0!important;
+    padding:10px 10px 22px 10px;
     z-index: -1;
   }
 
