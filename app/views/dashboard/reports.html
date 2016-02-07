@@ -1,0 +1,78 @@
+<div>
+	<snap-drawer>
+		<div class="snap-menu">
+			<div class="sidebar-header text-center">
+				<img src="images/sb.png" alt="" class="sidebar-img img-circle">
+			</div>
+			<ul class="snap-ul">
+				<li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">HOME</a></li>
+				<li ng-class="{active: $state.includes('reports')}"><a ui-sref="reports">REPORTS</a></li>
+				<li><a ui-sref="login">LOGOUT</a></li>
+			</ul>
+		</div>
+	</snap-drawer>
+	<snap-dragger></snap-dragger>
+	<snap-content snap-opt-tap-to-close="false" class="bg-dark">
+		<a href="" snap-toggle="left" ng-click="menuOpen = !menuOpen">
+			<span class="menutoggle">
+				<i ng-hide="menuOpen" class="fa fa-bars fa-2x" ></i>
+				<i ng-show="menuOpen" class="fa fa-times fa-2x" ></i>
+			</span>
+		</a>
+		
+		<div class="fr">
+		<h3>Settings and Preferences</h3>
+		</div>
+		<div class="jumbotron">
+			<div class="container">
+
+
+				<h2 class="seperator-title">Categories you want to save money</h2>
+				
+				<div id="format">
+				<ul class="pref-icons">
+				  <li class="cat-icons"><input type="checkbox" id="check1"><label for="check1">Food</label></li>
+				  <li class="cat-icons"><input type="checkbox" id="check2"><label for="check2">Travel</label></li>
+				  <li class="cat-icons"><input type="checkbox" id="check3"><label for="check3">Gas</label></li>
+				 </ul>
+				</div>
+
+				<h2 class="seperator-title">Duration</h2>
+
+				<label class="duration" for="minbeds">Speed of debt repayment</label>
+				  <select name="minbeds" id="minbeds">
+				    <option>Slow</option>
+				    <option>Medium</option>
+				    <option>Fast</option>
+				  </select>
+				 
+				<div id="slider"></div>
+
+			</div>
+		</div>
+	</snap-content>
+</div>
+
+<script>
+  $(function() {
+    $( "#check" ).button();
+    $( "#format" ).buttonset();
+  });
+
+$(function() {
+    var select = $( "#minbeds" );
+    var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+      min: 1,
+      max: 3,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#minbeds" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+
+  </script>
