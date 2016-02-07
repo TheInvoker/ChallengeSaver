@@ -5,24 +5,231 @@ var https = require('https'),
 var parseString = require('xml2js').parseString;
 var parser = require("./parser.js");
 var neuralnets = require("./neuralnets.js");
+var plotly = require("plotly")("rydsouza82", "orzgrkqusr");
+var synaptic = require("synaptic");
 
+function dec2bin(dec){
+    return (dec >>> 0).toString(2);
+}
+function dec2binLength(dec, l) {
+	var b = dec2bin(dec);
+	while (b.length < l) {
+		b = "0" + b;
+	}
+	return b;
+}
+function randomInt (low, high) {
+    return Math.floor(Math.random() * (high - low) + low);
+}
+function convertDateToBin(date) {
+	var dateList = date.split("/");
+	for(var j=0; j<dateList.length; j+=1) {
+		dateList[j] = parseInt(dateList[j], 10);
+	}
+	
+	var a = dec2binLength(dateList[0], 4);
+	var b = dec2binLength(dateList[1], 5);
+	var c = a + b;
+	var d = c.split("");
+	for(var j=0; j<d.length; j+=1) {
+		d[j] = parseInt(d[j], 10);
+	}
+	return d;
+}
+function convertBintoNet(bin) {
+	for(var i=0; i<bin.length; i+=1) {
+		bin[i] = bin[i] > 0.5 ? 1 : 0;
+	}
+	var num = bin.join("");
+	var numB = parseInt(num, 2);
+	return numB;
+}
 
+var returnData = {};
+		
 parser.parser(function(categoryObj) {
 	
-	var NNObject = new neuralnets.neural_nets([2, 20, 20, 1], 'hyperbolictangent', 0.5, function(data) {
-		console.log(data);
-		return [1,1];
-	}, function(data) {
-		return [1];
+	var total = 0;
+	for (category in categoryObj) {
+		var items = categoryObj[category].list;
+		total += items.length;
+	}
+
+	var net = 0;
+	var posnet = 0;
+	var newData = [];
+	for (category in categoryObj) {
+		var items = categoryObj[category].list;
+		
+		var avg = 0;
+		for(var i=0; i<items.length; i+=1) {
+			net += items[i].price;
+			avg += items[i].price;
+			if (items[i].price < 0) {
+				posnet += -items[i].price;
+			}
+			newData.push(net);
+		}
+		avg = (items.length==0) ? 0 : avg/items.length;
+		
+		categoryObj[category].ratio = items.length / total;
+		categoryObj[category].avgprice = avg;
+	}
+
+	if (net < 0) {
+		var debt = -net * 0.35;
+	} else {
+		var debt = net * 0.1;
+	}
+	var dropratio = debt / posnet;
+	
+	console.log(net);
+	console.log(debt);
+	console.log(posnet);
+	console.log(dropratio);
+	
+	for (category in categoryObj) {
+		var s = categoryObj[category].avgprice * dropratio;
+		returnData[category] = s;
+	}
+	
+	
+	
+	/*
+	return;
+	
+
+	
+	var Perceptron = synaptic.Architect.Perceptron,
+	  LSTM = synaptic.Architect.LSTM,
+	  Layer = synaptic.Layer,
+	  Network = synaptic.Network,
+	  Trainer = synaptic.Trainer;
+		
+	var inputLayer = new Layer(9);
+	var hiddenLayer = new Layer(6);
+	var outputLayer = new Layer(11);
+		
+	inputLayer.project(hiddenLayer, Layer.connectionType.ALL_TO_ALL);
+	hiddenLayer.project(outputLayer, Layer.connectionType.ALL_TO_ALL);
+	
+	var myNetwork = new Network({
+		input: inputLayer,
+		hidden: [hiddenLayer],
+		output: outputLayer
 	});
 
-	return;
-	for(category in categoryObj) {
-		var in_ = [category, ];
-		var out_ = [];
-		NNObject.train([in_, out_]);
+	var trainer = new Trainer(myNetwork);
+	var net = 0;
+	var outsTime = [];	
+	var minNet = 0;
+	
+	for(var i=0; i<dataList.length; i+=1) {
+		net += dataList[i].price;
+		net = parseInt(Math.floor(net), 10);
+		minNet = Math.min(minNet, net);
+		outsTime.push(net);
 	}
+	for(var i=0; i<outsTime.length; i+=1) {
+		outsTime[i] += minNet;
+	}
+	
+	var q = 0;
+	var trainingSet = [];
+	for(var i=0; i<dataList.length; i+=1) {
+		var d = convertDateToBin(dataList[i].date);
+		var a = dec2binLength(outsTime[i], 11);
+		var b = a.split("");
+		for(var j=0; j<b.length; j+=1) {
+			b[j] = parseInt(b[j], 10);
+		}
+
+		trainingSet.push({
+			'input' : [0.3,0.4,0.4,0.5,0.2,0.2,0.04,0.3,0.9],
+			'output' : b
+		});
+	}
+	
+	var trainer = new Trainer(myNetwork);
+	trainer.train(trainingSet,{
+		rate: .5,
+		iterations: 500,
+		error: .0005,
+		shuffle: true,
+		cost: Trainer.cost.CROSS_ENTROPY
+	});
+		
+		
+		
+	//var d = convertDateToBin("01/05/2016");
+	//var result = myNetwork.activate(d);
+	//var r = convertBintoNet(result)-minNet;
+	//console.log(r);
+	//return;
+	
+	
+	var d = new Date(Date.parse("01/04/2016"));
+	var newData = [];
+	var newLen = 1000;
+	
+	for(var i=0; i<newLen; i+=1) {
+		d.setMonth(d.getMonth() + 1);
+		var newStr = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+				
+		var w = convertDateToBin(newStr);
+		var t = myNetwork.activate(w);
+		var y = convertBintoNet(t)-minNet;
+		
+		newData.push(1);
+	}
+
+	
+	
+	//console.log("Trained!");
+	
+	*/
+	
+	
+	
+	
+	/*
+	var xs = [];
+	var acc = 0;
+	for (var i=0; i<newData.length; i+=1) {
+		xs.push(i);
+	}
+	var ys = newData; 
+	
+	
+	var data = [
+	  {
+		x: xs,
+		y: ys,
+		type: "scatter"
+	  }
+	];
+	var layout = {
+	  xaxis: {
+		autorange: false
+	  }
+	};
+	
+	console.log("Making graph");
+
+	
+	var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
+	plotly.plot(data, graphOptions, function (err, msg) {
+		console.log(msg);
+		console.log("DONE!");
+	});
+	*/
 });
+
+
+
+
+
+
 
 
 
@@ -45,6 +252,7 @@ var backServer = app.listen(process.env.PORT || 3000, function () {
 });
 
 
+/*
 var APP_KEY = 'a0874b0eda76ae7918c7798eeef92c1a';
 
 function PartnerAuthentication() {
@@ -265,11 +473,17 @@ var accountNumber = "7610023";
 //AddAllAccounts(token, customer_id, institutionIDc, "101732001", "Banking Userid", "test123", "101732002", "Banking Password", "test424");
 //GetCustomerAccountTransactions(token, customer_id, accountNumber, '1297004119', '1454770519')
 
+*/
+
 var io = require('socket.io').listen(backServer);
 
 io.on('connection', function(socket){
 	console.log("a user connected");
 
+	socket.on('getChallenge', function() {
+		socket.emit('getChallengeSuccess', returnData);
+	});
+	
 	socket.on('disconnect', function() {
 		console.log("a user disconnected");
 	});

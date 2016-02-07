@@ -7,12 +7,14 @@
 	
 	alpha - learning rate
 	
-	encodeFunc - a function that takes any data and returns a list of numbers (of size neurons[0]) to put into the input layer
+	encodeInputFunc - a function that takes any data and returns a list of numbers (of size neurons[0]) to put into the input layer
 	
-	decodeFunc - a function that takes a list of numbers (of size neurons[-1]) and turns it back into your desired data
+	encodeOutputFunc - 
+	
+	decodeOutputFunc - a function that takes a list of numbers (of size neurons[-1]) and turns it back into your desired data
 */
 
-exports.neural_nets = function(neurons, funcType, alpha, encodeFunc, decodeFunc) {
+exports.neural_nets = function(neurons, funcType, alpha, encodeInputFunc, encodeOutputFunc, decodeOutputFunc) {
 	
 	var matrix_list = [], activation_func, derivative_activation_func;
 	
@@ -181,9 +183,9 @@ exports.neural_nets = function(neurons, funcType, alpha, encodeFunc, decodeFunc)
 	};
 	
 	this.runInput = function(input) {
-		var en = encodeFunc(input);
+		var en = encodeInputFunc(input);
 		var output = feedForward(en, function(input){});
-		var de = decodeFunc(output);
+		var de = decodeOutputFunc(output);
 		return de;
 	};
 	
@@ -191,8 +193,8 @@ exports.neural_nets = function(neurons, funcType, alpha, encodeFunc, decodeFunc)
 	
 		var output_list = [], i, input, expected;
 	
-		input = encodeFunc(training_item[0]);
-		expected = encodeFunc(training_item[1]);
+		input = encodeInputFunc(training_item[0]);
+		expected = encodeOutputFunc(training_item[1]);
 		
 		// feed forward
 		input = feedForward(input, function(input) {
