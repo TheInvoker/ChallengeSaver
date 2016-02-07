@@ -163,22 +163,29 @@ function checkData(callback) {
 					
 					var curentNum = cntThisWeek;
 					
+					var intent = category=="Coffee" ? "Buy " : "Bring ";
+					
 					if (Math.random() < 0.45) {
-						var topMessage = "Buy " + category + " once this week.";
+						var topMessage = intent + category + " once this week.";
 						var maxNum = curentNum + 1;
 						var t = 1;
 					} else if (Math.random() < 0.75) {
-						var topMessage = "Buy " + category + " twice this week.";
+						var topMessage = intent + category + " twice this week.";
 						var maxNum = curentNum + 2;
 						var t = 2;
 					} else {
-						var topMessage = "Buy " + category + " three times this week.";
+						var topMessage = intent + category + " three times this week.";
 						var maxNum = curentNum + 3;
 						var t = 3;
 					}
 					
 					var saving = Math.ceil(avg*0.1) * t;
-					var botMessage = "You will save $" + saving + " this week.";
+					
+					if (category=="Food") {
+						var botMessage = "Did you know you spend about $" + avg + + " each meal.";
+					} else {
+						var botMessage = "You will save $" + saving + " this week.";
+					}
 					
 				} else {
 					var saving = Math.ceil(avg*0.1) * (Math.random() < 0.5 ? 1 : 2);
