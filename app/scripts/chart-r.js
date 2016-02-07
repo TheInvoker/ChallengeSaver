@@ -1,4 +1,4 @@
-$(document).ready(function() {
+setTimeout(function() { $(document).ready(function() {
 			
 				
 				Chart.defaults.global = {
@@ -169,4 +169,4 @@ $(document).ready(function() {
 					drawGraph(points);
 					drawDashedLine();
 				});
-			});
+			}); },3000);
