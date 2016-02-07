@@ -50,9 +50,11 @@ h2.challenge-title {
 
 .card-hor-scroll {
     width:auto;
+    text-align: center;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+    padding: 30px 0;
 }
 
 .card {
@@ -64,6 +66,7 @@ h2.challenge-title {
     max-width:90%;
     min-height:200px;
     word-wrap: break-word;
+    text-align:left;
 }
 
 .word-wrap-normal {
@@ -91,7 +94,7 @@ h2.challenge-title {
 }
 
 .card-content {
-  padding:5px 8px;
+  padding:5px 14px;
   white-space: pre-line;
   min-height:170px;
 }
@@ -211,6 +214,7 @@ snap-content {
             position: absolute;
             left: 15px;
             top: 25px;
+            color:@brand-primary;
         }
     }
 }
@@ -265,4 +269,15 @@ snap-drawer {
     a:hover {
         cursor: pointer;
     }
+}
+
+@media (min-width: 1280px) {
+  .card-hor-scroll {
+        overflow-x: hidden!important;
+        overflow-y: hidden;
+  }
+
+  .challenge-title {
+    margin:45px 0 25px 0!important;
+  }
 }
