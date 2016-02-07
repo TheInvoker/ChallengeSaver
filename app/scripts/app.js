@@ -15,10 +15,6 @@
     'ngAnimate'
     ])
  .config(function($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.when('/dashboard', '/dashboard/overview');
-    $urlRouterProvider.otherwise('/login');
-
     $stateProvider
     .state('base', {
         abstract: true,
@@ -30,13 +26,13 @@
       parent: 'base',
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
-  })
+    })
     .state('dashboard', {
       url: '/dashboard',
       parent: 'base',
       templateUrl: 'views/dashboard.html',
       controller: 'DashboardCtrl'
-  })
+    })
     .state('overview', {
         url: '/overview',
         parent: 'dashboard',
@@ -47,11 +43,11 @@
         parent: 'dashboard',
         templateUrl: 'views/dashboard/reports.html'
     })
-        .state('join', {
-            url: '/join',
-            parent: 'dashboard',
-            templateUrl: 'views/dashboard/join.html'
-        })
-       ;
-
+    .state('join', {
+        url: '/join',
+        parent: 'dashboard',
+        controller: 'JoinCtrl',
+        templateUrl: 'views/dashboard/join.html'
+    })
+   
 });
