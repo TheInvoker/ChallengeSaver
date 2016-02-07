@@ -2,12 +2,13 @@ var express = require('express');
 var app = express();
 var https = require('https'),
     url = require('url');
-var parseString = require('xml2js').parseString;
+//var parseString = require('xml2js').parseString;
 var parser = require("./parser.js");
-var neuralnets = require("./neuralnets.js");
-var plotly = require("plotly")("rydsouza82", "orzgrkqusr");
-var synaptic = require("synaptic");
+//var neuralnets = require("./neuralnets.js");
+//var plotly = require("plotly")("rydsouza82", "orzgrkqusr");
+//var synaptic = require("synaptic");
 
+/*
 function dec2bin(dec){
     return (dec >>> 0).toString(2);
 }
@@ -44,186 +45,317 @@ function convertBintoNet(bin) {
 	var numB = parseInt(num, 2);
 	return numB;
 }
+*/
 
 
-var userData = {};
-parser.parser(function(categoryObj) {
-	
-	var total = 0;
-	for (category in categoryObj) {
-		var items = categoryObj[category].list;
-		total += items.length;
-	}
+function diffDays(date1, date2) {
+	//var date1 = new Date("7/11/2010");
+	//var date2 = new Date("12/12/2010");
+	var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+	var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+	//alert(diffDays);
+	return diffDays;
+}
 
-	var net = 0;
-	var posnet = 0;
-	var newData = [];
-	for (category in categoryObj) {
-		var items = categoryObj[category].list;
-		
-		var avg = 0;
-		for(var i=0; i<items.length; i+=1) {
-			net += items[i].price;
-			avg += items[i].price;
-			if (items[i].price < 0) {
-				posnet += -items[i].price;
-			}
-			newData.push(net);
-		}
-		avg = (items.length==0) ? 0 : avg/items.length;
-		
-		categoryObj[category].ratio = items.length / total;
-		categoryObj[category].avgprice = avg;
-	}
 
-	if (net < 0) {
-		var debt = -net * 0.35;
-	} else {
-		var debt = net * 0.1;
-	}
-	var dropratio = debt / posnet;
-	
-	var returnData = {};
-	for (category in categoryObj) {
-		var s = categoryObj[category].avgprice * dropratio;
-		returnData[category] = s;
-	}
-	userData = {
-		'netData' : newData,
-		'limits' : returnData
-	};
-	
-	
-	/*
-	return;
-	
+var userDownloadData = {};
+var expiredData = true;
+var categoryIncludeList = {};
 
-	
-	var Perceptron = synaptic.Architect.Perceptron,
-	  LSTM = synaptic.Architect.LSTM,
-	  Layer = synaptic.Layer,
-	  Network = synaptic.Network,
-	  Trainer = synaptic.Trainer;
-		
-	var inputLayer = new Layer(9);
-	var hiddenLayer = new Layer(6);
-	var outputLayer = new Layer(11);
-		
-	inputLayer.project(hiddenLayer, Layer.connectionType.ALL_TO_ALL);
-	hiddenLayer.project(outputLayer, Layer.connectionType.ALL_TO_ALL);
-	
-	var myNetwork = new Network({
-		input: inputLayer,
-		hidden: [hiddenLayer],
-		output: outputLayer
-	});
 
-	var trainer = new Trainer(myNetwork);
-	var net = 0;
-	var outsTime = [];	
-	var minNet = 0;
-	
-	for(var i=0; i<dataList.length; i+=1) {
-		net += dataList[i].price;
-		net = parseInt(Math.floor(net), 10);
-		minNet = Math.min(minNet, net);
-		outsTime.push(net);
-	}
-	for(var i=0; i<outsTime.length; i+=1) {
-		outsTime[i] += minNet;
-	}
-	
-	var q = 0;
-	var trainingSet = [];
-	for(var i=0; i<dataList.length; i+=1) {
-		var d = convertDateToBin(dataList[i].date);
-		var a = dec2binLength(outsTime[i], 11);
-		var b = a.split("");
-		for(var j=0; j<b.length; j+=1) {
-			b[j] = parseInt(b[j], 10);
-		}
 
-		trainingSet.push({
-			'input' : [0.3,0.4,0.4,0.5,0.2,0.2,0.04,0.3,0.9],
-			'output' : b
-		});
-	}
+
+
+function checkData(callback) {
 	
-	var trainer = new Trainer(myNetwork);
-	trainer.train(trainingSet,{
-		rate: .5,
-		iterations: 500,
-		error: .0005,
-		shuffle: true,
-		cost: Trainer.cost.CROSS_ENTROPY
-	});
+	parser.parser(function(categoryObj) {
+		
+		var userData = {};
 		
 		
+		// calculate days left to pay
+		var today = new Date();
+		var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+		var daysLeft = lastDayOfMonth.getDate() - today.getDate();
 		
-	//var d = convertDateToBin("01/05/2016");
-	//var result = myNetwork.activate(d);
-	//var r = convertBintoNet(result)-minNet;
-	//console.log(r);
-	//return;
-	
-	
-	var d = new Date(Date.parse("01/04/2016"));
-	var newData = [];
-	var newLen = 1000;
-	
-	for(var i=0; i<newLen; i+=1) {
-		d.setMonth(d.getMonth() + 1);
-		var newStr = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+		
+		// calculate debt to owe
+		var net = 0;
+		var xs = [];
+		var ys = [];
+		var nameList = {};
+		for (category in categoryObj) {
+			var items = categoryObj[category].list;
+			for(var i=0; i<items.length; i+=1) {
+				net += -items[i].price;
+				xs.push(items[i].date);
+				ys.push(net);
 				
-		var w = convertDateToBin(newStr);
-		var t = myNetwork.activate(w);
-		var y = convertBintoNet(t)-minNet;
+				if (items[i].name in nameList) {
+					nameList[items[i].name] += 1;
+				} else {
+					nameList[items[i].name] = 1;
+				}
+			}
+		}
+		var debt = (net < 0) ? (-net * 0.35) : (net * 0.1);
 		
-		newData.push(1);
-	}
+		
+		// calculate top 10 most frequent places
+		var flist = [];
+		for(name in nameList) {
+			flist.push({
+				'name' : name,
+				'count' : nameList[name]
+			});
+		}
+		flist.sort(function(x_, y_){
+			var x = x_.count, y = y_.count;
+			if (x < y) {
+				return 1;
+			}
+			if (x > y) {
+				return -1;
+			}
+			return 0;
+		});
+		
+		
+		// randomize category list
+		var categoryObjList = [];
+		for (category in categoryObj) {
+			categoryObjList.push(categoryObj[category]);
+		}
+		categoryObjList.shuffle();
+		
+		
+		
+		
+		var usedCategories = 0;
+		for(var i=0; i<categoryObjList.length; i+=1) {
+			var category = categoryObjList[i];
+			
+			if (Object.keys(categoryIncludeList).length==0 || category in categoryIncludeList) {
+				
+				var items = categoryObj[category].list;
+				
+				
+				// calculate average price per category for items that you payed for and in last 7 days
+				var avg = 0;
+				var cnt = 0;
+				var cntThisWeek = 0;
+				var lstItem = null;
+				for(var i=0; i<items.length; i+=1) {
+					if (items[i].price < 0) {
+						avg += -items[i].price;
+						cnt += 1;
+						if (diffDays(items[i].date, today) <= 7) {
+							cntThisWeek += 1;
+						} else {
+							lstItem = items[i];
+						}
+					}
+				}
+				avg = (cnt > 0) ? (avg/cnt) : cnt;
+				
+				// calculate top message
+				if (category=="Coffee" || category=="Food") {
+					
+					var curentNum = cntThisWeek;
+					
+					if (Math.random() < 0.45) {
+						var topMessage = "Buy " + category + " once this week.";
+						var maxNum = curentNum + 1;
+						var t = 1;
+					} else if (Math.random() < 0.75) {
+						var topMessage = "Buy " + category + " twice this week.";
+						var maxNum = curentNum + 2;
+						var t = 2;
+					} else {
+						var topMessage = "Buy " + category + " three times this week.";
+						var maxNum = curentNum + 3;
+						var t = 3;
+					}
+					
+					var saving = Math.ceil(avg*0.1) * t;
+					var botMessage = "You will save $" + saving + " this week.";
+					
+				} else {
+					var saving = Math.ceil(avg*0.1) * (Math.random() < 0.5 ? 1 : 2);
+					var topMessage = "Spend under " + saving + " on this trip.";
+					var curentNum = null;
+					var maxNum = null;
+					var botMessage = (lstItem==null) ? "" : "You spent $" + lstItem.price + " on " + category + ".";
+				}
+				
+				
+				
+				// store data
+				userData[category] = {
+					'className' : category.toLowerCase() + "-icon",
+					'topMessage' : topMessage,
+					'curentNum' : curentNum,
+					'maxNum' : maxNum,
+					'botMessage' : botMessage,
+					'saving' : saving
+				};
+				
+				usedCategories += 1;
+				if (usedCategories == 3) {
+					break;
+				}
+			}
+		}
+		
+		// return data
+		userDownloadData = {
+			'daysLeftToPay' : daysLeft,
+			'cardList' : userData,
+			'graphXs' : xs,
+			'graphYs' : ys,
+			'top10' : flist.splice(0,10)
+		};
+		
+		
+		expiredData = false;
+		setTimeout(function() {
+			expiredData = true;
+		}, 1000 * 60 * 60 * 24 * 7);
+		callback(userDownloadData);
+		
+		
+		
+		
+		/*
+		return;
+		
 
-	
-	
-	//console.log("Trained!");
-	
-	*/
-	
-	
-	
-	
-	/*
-	var xs = [];
-	var acc = 0;
-	for (var i=0; i<newData.length; i+=1) {
-		xs.push(i);
-	}
-	var ys = newData; 
-	
-	
-	var data = [
-	  {
-		x: xs,
-		y: ys,
-		type: "scatter"
-	  }
-	];
-	var layout = {
-	  xaxis: {
-		autorange: false
-	  }
-	};
-	
-	console.log("Making graph");
+		
+		var Perceptron = synaptic.Architect.Perceptron,
+		  LSTM = synaptic.Architect.LSTM,
+		  Layer = synaptic.Layer,
+		  Network = synaptic.Network,
+		  Trainer = synaptic.Trainer;
+			
+		var inputLayer = new Layer(9);
+		var hiddenLayer = new Layer(6);
+		var outputLayer = new Layer(11);
+			
+		inputLayer.project(hiddenLayer, Layer.connectionType.ALL_TO_ALL);
+		hiddenLayer.project(outputLayer, Layer.connectionType.ALL_TO_ALL);
+		
+		var myNetwork = new Network({
+			input: inputLayer,
+			hidden: [hiddenLayer],
+			output: outputLayer
+		});
 
-	
-	var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
-	plotly.plot(data, graphOptions, function (err, msg) {
-		console.log(msg);
-		console.log("DONE!");
+		var trainer = new Trainer(myNetwork);
+		var net = 0;
+		var outsTime = [];	
+		var minNet = 0;
+		
+		for(var i=0; i<dataList.length; i+=1) {
+			net += dataList[i].price;
+			net = parseInt(Math.floor(net), 10);
+			minNet = Math.min(minNet, net);
+			outsTime.push(net);
+		}
+		for(var i=0; i<outsTime.length; i+=1) {
+			outsTime[i] += minNet;
+		}
+		
+		var q = 0;
+		var trainingSet = [];
+		for(var i=0; i<dataList.length; i+=1) {
+			var d = convertDateToBin(dataList[i].date);
+			var a = dec2binLength(outsTime[i], 11);
+			var b = a.split("");
+			for(var j=0; j<b.length; j+=1) {
+				b[j] = parseInt(b[j], 10);
+			}
+
+			trainingSet.push({
+				'input' : [0.3,0.4,0.4,0.5,0.2,0.2,0.04,0.3,0.9],
+				'output' : b
+			});
+		}
+		
+		var trainer = new Trainer(myNetwork);
+		trainer.train(trainingSet,{
+			rate: .5,
+			iterations: 500,
+			error: .0005,
+			shuffle: true,
+			cost: Trainer.cost.CROSS_ENTROPY
+		});
+			
+			
+			
+		//var d = convertDateToBin("01/05/2016");
+		//var result = myNetwork.activate(d);
+		//var r = convertBintoNet(result)-minNet;
+		//console.log(r);
+		//return;
+		
+		
+		var d = new Date(Date.parse("01/04/2016"));
+		var newData = [];
+		var newLen = 1000;
+		
+		for(var i=0; i<newLen; i+=1) {
+			d.setMonth(d.getMonth() + 1);
+			var newStr = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+					
+			var w = convertDateToBin(newStr);
+			var t = myNetwork.activate(w);
+			var y = convertBintoNet(t)-minNet;
+			
+			newData.push(1);
+		}
+
+		
+		
+		//console.log("Trained!");
+		
+		*/
+		
+		
+		
+		
+		/*
+		var xs = [];
+		var acc = 0;
+		for (var i=0; i<newData.length; i+=1) {
+			xs.push(i);
+		}
+		var ys = newData; 
+		
+		
+		var data = [
+		  {
+			x: xs,
+			y: ys,
+			type: "scatter"
+		  }
+		];
+		var layout = {
+		  xaxis: {
+			autorange: false
+		  }
+		};
+		
+		console.log("Making graph");
+
+		
+		var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
+		plotly.plot(data, graphOptions, function (err, msg) {
+			console.log(msg);
+			console.log("DONE!");
+		});
+		*/
 	});
-	*/
-});
-
+}
 
 
 
@@ -480,7 +612,24 @@ io.on('connection', function(socket){
 	console.log("a user connected");
 
 	socket.on('getChallenge', function() {
-		socket.emit('getChallengeSuccess', userData);
+		
+		if (expiredData) {
+			checkData(function(userDownloadData) {
+				socket.emit('getChallengeSuccess', userDownloadData);
+			});
+		} else {
+			socket.emit('getChallengeSuccess', userDownloadData);
+		}
+	});
+	
+	socket.on('setCategories', function(data) {
+		categoryIncludeList = {};
+		for(var i=0; i<data.length; i+=1) {
+			categoryIncludeList[data[i]] = true;
+		}
+		socket.emit('setCategoriesSuccess', {
+			'status' : 'OK'
+		});
 	});
 	
 	socket.on('disconnect', function() {

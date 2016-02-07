@@ -93,7 +93,7 @@ exports.parser = function(callback) {
 					first = false;
 				} else {
 					var lineArray = line.trim().split(",");
-					var date = lineArray[0];
+					var date = new Date(Date.parse(lineArray[0]));
 					var name = lineArray[1].replace(/"/g, "");
 					var price = parseFloat(lineArray[3]);
 					var category = lineArray[4];
