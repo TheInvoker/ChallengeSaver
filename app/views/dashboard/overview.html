@@ -111,9 +111,9 @@
 					    		<div class="card-title-icon"><img src="images/food-icon.png"></div>
 					    	</div>
 					    	<div class="card-content">
-					    		<span class="content-text">Buy coffee only twice this week</span>
-					    		<span class="content-progress"><progress max="100" value="50"></progress> 1<span>/</span>2</span>
-					    		<span class="content-text-lower">You last bought coffee last Tuesday</span>
+					    		<span class="content-text">Take lunch to work 3 times this week</span>
+					    		<span class="content-progress"><progress max="3" value="2"></progress> 2<span>/</span>3</span>
+					    		<span class="content-text-lower">On average it costs you $10.31 to buy a meal out!</span>
 					    	</div>
 					    </div>
 					  </div> 
@@ -124,7 +124,7 @@
 					   		<div class="card-title-icon"><img src="images/food-icon.png"></div>
 					   	</div>
 					   	<div class="card-content">
-					   		<span class="content-text">Buy coffee only twice this week</span>
+					   		<span class="content-text">Take lunch to work 3 times this week</span>
 					   		<span class="content-progress"><progress max="100" value="50"></progress> 1<span>/</span>2</span>
 					   		<button class="mark-complete" id="complete-3">Mark Complete</button>
 					   	</div>
@@ -187,6 +187,8 @@
 	    var socket = io("http://localhost:3000/");
 	            socket.on('getChallengeSuccess', function(data) {
 	              // alert(JSON.stringify(data));
+	              $('span.days').html(data.daysLeftToPay + " DAYS" );
+	              $('span.days').html(data.daysLeftToPay + " DAYS" ); 
 	            });
 	            socket.on('setCategoriesSuccess', function(data) {
 	            });
