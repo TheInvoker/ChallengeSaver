@@ -25,26 +25,54 @@
 		</div>
 		<div class="jumbotron">
 			<div class="container">
-				<h2 class="seperator-title">Preferences</h2>
-				<div class="preferences">
-					<ul class="pref-icons">
-						<li class="cat-icons">
-							<div id="ck-button">
-							   <label>
-							      <input type="checkbox" name="test" value="1"><span>Category 1</span>
-							   </label>
-							</div>
-						</li>
-						<li class="cat-icons">
-							<div id="ck-button">
-							   <label>
-							      <input type="checkbox" name="test" value="1"><span>Category 1</span>
-							   </label>
-							</div>
-						</li>
-					</ul>
+
+
+				<h2 class="seperator-title">Categories you want to save money</h2>
+				
+				<div id="format">
+				<ul class="pref-icons">
+				  <li class="cat-icons"><input type="checkbox" id="check1"><label for="check1">Food</label></li>
+				  <li class="cat-icons"><input type="checkbox" id="check2"><label for="check2">Travel</label></li>
+				  <li class="cat-icons"><input type="checkbox" id="check3"><label for="check3">Gas</label></li>
+				 </ul>
 				</div>
+
+				<h2 class="seperator-title">Duration</h2>
+
+				<label class="duration" for="minbeds">Speed of debt repayment</label>
+				  <select name="minbeds" id="minbeds">
+				    <option>Slow</option>
+				    <option>Medium</option>
+				    <option>Fast</option>
+				  </select>
+				 
+				<div id="slider"></div>
+
 			</div>
 		</div>
-	</snap-content>	
+	</snap-content>
 </div>
+
+<script>
+  $(function() {
+    $( "#check" ).button();
+    $( "#format" ).buttonset();
+  });
+
+$(function() {
+    var select = $( "#minbeds" );
+    var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+      min: 1,
+      max: 3,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#minbeds" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+
+  </script>

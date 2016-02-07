@@ -35,7 +35,7 @@
 				<h2 class="challenge-title">Here are this week's challenges</h2>
 				
 				<div class="card-hor-scroll">
-					<div class="card-container">
+					<div class="card-container" id="card-container-1">
 					<div id="card-1"> 
 					  <div class="front"> 
 					    
@@ -62,7 +62,7 @@
 					  		<div class="card-content">
 					  			<span class="content-text">Buy coffee only twice this week</span>
 					  			<span class="content-progress"><progress max="100" value="50"></progress> 1<span>/</span>2</span>
-					  			<button class="mark-complete">Mark Complete</button>
+					  			<button class="mark-complete" id="complete-1">Mark Complete</button>
 					  		</div>
 					  	</div>
 					 </div>
@@ -71,7 +71,7 @@
 
 				</div>
 
-				<div class="card-container">
+				<div class="card-container" id="card-container-2">
 					<div id="card-2"> 
 					  <div class="front"> 
 					    <div class="card">
@@ -94,7 +94,7 @@
 					    	<div class="card-content word-wrap-normal">
 					    		<span class="content-text">Spend under $50 on your grocery trip</span>
 					    		<span class="content-text-lower">Save $9.00 compared to your last grocery trip</span>
-					    		<button class="mark-complete">Mark Complete</button>
+					    		<button class="mark-complete" id="complete-2">Mark Complete</button>
 					    	</div>
 					    </div>	
 					  </div> 
@@ -102,13 +102,13 @@
 
 				</div>
 
-					<div class="card-container">
+					<div class="card-container" id="card-container-3">
 					<div id="card-3"> 
 					  <div class="front"> 
 					    <div class="card">
 					    	<div class="card-header">
-					    		<div class="card-title">Coffee</div>
-					    		<div class="card-title-icon"><img src="images/coffee-icon.png"></div>
+					    		<div class="card-title">Food</div>
+					    		<div class="card-title-icon"><img src="images/food-icon.png"></div>
 					    	</div>
 					    	<div class="card-content">
 					    		<span class="content-text">Buy coffee only twice this week</span>
@@ -120,13 +120,13 @@
 					  <div class="back">
 					   <div class="card">
 					   	<div class="card-header">
-					   		<div class="card-title">Coffee</div>
-					   		<div class="card-title-icon"><img src="images/coffee-icon.png"></div>
+					   		<div class="card-title">Food</div>
+					   		<div class="card-title-icon"><img src="images/food-icon.png"></div>
 					   	</div>
 					   	<div class="card-content">
 					   		<span class="content-text">Buy coffee only twice this week</span>
 					   		<span class="content-progress"><progress max="100" value="50"></progress> 1<span>/</span>2</span>
-					   		<button class="mark-complete">Mark Complete</button>
+					   		<button class="mark-complete" id="complete-3">Mark Complete</button>
 					   	</div>
 					   </div>
 					  </div> 
@@ -140,7 +140,7 @@
 					
 				</div>
 
-				<h2 class="challenge-title">Your Debt Timeline</h2>
+				<h2 class="challenge-title debt">Your Debt Timeline</h2>
 
 				<div id="chart-container">
 							<!--<div id="my-chart"></div>-->
@@ -149,8 +149,12 @@
 
 
 				<h2 class="challenge-title">Top 10 places you spend your money on</h2>
-				<ul>
-					<li></li>
+				<ul class="places-spend">
+					<li>Starbucks</li>
+					<li>McDonalds</li>
+					<li>Walmart</li>
+					<li>Starbucks</li>
+
 				</ul>
 
 
@@ -171,6 +175,16 @@
 
       $(".card-hor-scroll").delay(1100).fadeIn(900);
 
-    });</script>
+	    $('#complete-1').click(function() {
+               $('#card-container-1').toggle("slideUp");
+    	});
+   		$('#complete-2').click(function() {
+               $('#card-container-2').toggle("slideUp");
+      	});
+		$('#complete-3').click(function() {
+                   $('#card-container-3').toggle("slideUp");
+	    });
+	});
+    </script>
 
 </div>

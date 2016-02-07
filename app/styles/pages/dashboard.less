@@ -118,7 +118,23 @@ h2.challenge-title {
   font-size:16px;
   font-weight:600;
   display:block;
+}
 
+ul.places-spend {
+  list-style: none;
+  margin:0;
+  padding:0!important;
+  margin-bottom:40px;
+}
+
+ul.places-spend li {
+  text-align:center;
+  font-size:20px;
+  padding:10px 20px;
+  border:1px solid rgba(0,0,0,0.1);
+  margin-bottom:10px;
+  width:49%;
+  display:inline-block;
 }
 
 progress[value]::-webkit-progress-bar {
@@ -325,6 +341,10 @@ snap-drawer {
     margin:45px 0 25px 0!important;
   }
 
+  .challenge-title.debt {
+    margin-top:20px!important;
+  }
+
   .countdown {
     position: absolute;
     top: 0;
@@ -348,6 +368,39 @@ snap-drawer {
   height:300px;
 }
 
+.bg-dark {
+  background:#ED1B2E!important;
+}
+
+.bg-dark h3 {
+  color:#fff;
+}
+
+.bg-dark.snap-content .menutoggle .fa {
+  color:#fff!important;
+}
+
+label.duration {
+  color:#fff!important;
+  font-size:20px!important;
+  font-weight:600;
+  padding-left: 0px;
+}
+
+span.ui-slider-handle.ui-state-default.ui-corner-all {
+  background:#fff!important;
+}
+
+.bg-dark select {
+    padding: 8px 7px;
+    text-align: center;
+    padding-left: 43px;
+    font-size: 20px;
+    background: none;
+    color: #fff;
+    float: right;
+}
+
 button.mark-complete {
     background: #797979;
     padding: 10px 35px;
@@ -368,6 +421,11 @@ h2.seperator-title {
   padding: 20px 0 20px 0;
   border-bottom: 1px solid rgba(255,255,255,0.82);
   margin-bottom: 20px;
+  margin-top:40px;
+}
+
+h2.seperator-title:first-child {
+  margin-top:0px;
 }
 
 ul.pref-icons {
@@ -380,57 +438,69 @@ li.cat-icons {
   display:inline-block;
   color:#fff;
   font-size:30px;
-  border:2px solid #fff;
-  border-radius:10px;
   margin-right:20px;
 }
 
-#ck-button {
-    border-radius:10px;
-    overflow:auto;
-    float:left;
+/*JQUERYUIOVERRIDE*/
 
-
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+  border-bottom-left-radius: 0px!important;
 }
 
-#ck-button label {
-    float:left;
-    color:#fff;
-
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+  border-top-left-radius:0px!important;
 }
 
-#ck-button label span {
-    text-align:center;
-    display:block;
-
-    padding:20px;
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+  border-top-right-radius:0px!important;
 }
 
-#ck-button label input {
-    position:absolute;
-    top:-20px;
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  border-bottom-right-radius:0px!important;
 }
 
-#ck-button input:hover + span {
-    background-color:none;
+label.ui-button.ui-widget.ui-state-default.ui-button-text-only {
+  min-width:200px;
+    font-size:26px!important; 
 }
 
-#ck-button input:checked + span {
-    background-color:none;
-    color:#fff;
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background:none!important;
+  color:#fff!important;
+ 
 }
 
-#ck-button input:checked:hover + span {
-    background-color:#fff;
-    color:@brand-primary;
+.ui-button:hover, .ui-button:active, .ui-state-active {
+  background:#fff!important;
+  color:#34495e!important;
 }
 
-.chart-container {
 
-}
 #chart-container {
   overflow-x: scroll;
   overflow-y: hidden;
   width:100%;
   text-align: center;
+}
+
+
+input[type="radio"] {
+-webkit-appearance: none;
+}
+
+label {
+  padding: 20px 50px;
+}
+
+input[type="radio"]:checked+label { 
+  background-color: black;
+}
+
+div.button {
+  padding:0;
+}
+
+div.button label {
+  color: #fff;
+  margin: 0;
 }
