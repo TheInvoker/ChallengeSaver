@@ -24,7 +24,7 @@ angular.module('yapp')
 
         $scope.user1={
             userName: "Michael",
-            bankName: "ScotiaBank",
+            bankName: "Scotiabank",
             accountNum: 1234567891
         };
         $scope.user2={
@@ -34,12 +34,22 @@ angular.module('yapp')
         };
         $scope.user3={
             userName: "Ryan",
-            bankName: "RBC",
+            bankName: "BMO",
             accountNum: 1234567891
         };
         $scope.user4={
             userName: "Mike",
-            bankName: "ScotichaBank",
+            bankName: "RBC",
+            accountNum: 4234567891
+        };
+        $scope.user5={
+            userName: "Mike",
+            bankName: "CIBC",
+            accountNum: 4234567891
+        };
+        $scope.user6={
+            userName: "Mike",
+            bankName: "HSBC",
             accountNum: 4234567891
         };
 
