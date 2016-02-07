@@ -184,6 +184,13 @@
 		$('#complete-3').click(function() {
                    $('#card-container-3').toggle("slideUp");
 	    });
+	    var socket = io("http://localhost:3000/");
+	            socket.on('getChallengeSuccess', function(data) {
+	              // alert(JSON.stringify(data));
+	            });
+	            socket.on('setCategoriesSuccess', function(data) {
+	            });
+	            socket.emit('getChallenge', {});
 	});
     </script>
 
