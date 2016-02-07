@@ -24,7 +24,7 @@ angular.module('yapp')
 
         $scope.user1={
             userName: "Michael",
-            bankName: "ScotichaBank",
+            bankName: "ScotiaBank",
             accountNum: 1234567891
         };
         $scope.user2={

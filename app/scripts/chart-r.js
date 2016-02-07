@@ -208,36 +208,36 @@ setTimeout(function() { $(document).ready(function() {
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////
 				
 				
-				if ( navigator.geolocation ) {
-					// Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
-					navigator.geolocation.getCurrentPosition(function (pos) {
-						var point = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-						alert(point);
-					}, function (error) {
+				// if ( navigator.geolocation ) {
+				// 	// Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
+				// 	navigator.geolocation.getCurrentPosition(function (pos) {
+				// 		var point = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+				// 		alert(point);
+				// 	}, function (error) {
 						
-						switch(error.code) {
-							case error.PERMISSION_DENIED:
-								alert("Could not get your location. User denied the request for Geolocation.");
-								break;
-							case error.POSITION_UNAVAILABLE:
-								alert("Could not get your location. Location information is unavailable.");
-								break;
-							case error.TIMEOUT:
-								alert("Could not get your location. The request to get user location timed out.");
-								break;
-							case error.UNKNOWN_ERROR:
-								alert("Could not get your location. An unknown error occurred.");
-								break;
-							default:
-								alert("Could not get your location. An unknown error occurred.");
-						}
-					}, {
-						maximumAge: 500000, 
-						enableHighAccuracy:true, 
-						timeout: 6000
-					});
-				} else {
-				}
+				// 		switch(error.code) {
+				// 			case error.PERMISSION_DENIED:
+				// 				alert("Could not get your location. User denied the request for Geolocation.");
+				// 				break;
+				// 			case error.POSITION_UNAVAILABLE:
+				// 				alert("Could not get your location. Location information is unavailable.");
+				// 				break;
+				// 			case error.TIMEOUT:
+				// 				alert("Could not get your location. The request to get user location timed out.");
+				// 				break;
+				// 			case error.UNKNOWN_ERROR:
+				// 				alert("Could not get your location. An unknown error occurred.");
+				// 				break;
+				// 			default:
+				// 				alert("Could not get your location. An unknown error occurred.");
+				// 		}
+				// 	}, {
+				// 		maximumAge: 500000, 
+				// 		enableHighAccuracy:true, 
+				// 		timeout: 6000
+				// 	});
+				// } else {
+				// }
 				
 				
-			}); },3000);
+			}); },4000);
