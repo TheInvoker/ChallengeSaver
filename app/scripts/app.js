@@ -46,6 +46,12 @@
         url: '/reports',
         parent: 'dashboard',
         templateUrl: 'views/dashboard/reports.html'
-    });
+    })
+        .state('join', {
+            url: '/join',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/join.html'
+        })
+       ;
 
 });

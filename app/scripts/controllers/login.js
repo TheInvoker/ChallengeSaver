@@ -14,7 +14,9 @@ angular.module('yapp')
 
       $location.path('/dashboard');
 
+
       return false;
     }
+
 
   });
