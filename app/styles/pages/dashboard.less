@@ -55,6 +55,7 @@ h2.challenge-title {
     overflow-y: hidden;
     white-space: nowrap;
     padding: 30px 0;
+    display: none;
 }
 
 .card {
@@ -352,4 +353,69 @@ button.mark-complete {
     margin-left: 20px;
     color: #fff;
     border: 0px transparent none;
+}
+
+h2.seperator-title {
+  color:#fff;
+  font-weight:600;
+  font-size:20px;
+  text-align:center;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.82);
+  margin-bottom: 20px;
+}
+
+ul.pref-icons {
+  list-style:none;
+  margin:0 auto;
+  padding-top:20px;
+}
+
+li.cat-icons {
+  display:inline-block;
+  color:#fff;
+  font-size:30px;
+  border:2px solid #fff;
+  border-radius:10px;
+  margin-right:20px;
+}
+
+#ck-button {
+    border-radius:10px;
+    overflow:auto;
+    float:left;
+
+
+}
+
+#ck-button label {
+    float:left;
+    color:#fff;
+
+}
+
+#ck-button label span {
+    text-align:center;
+    display:block;
+
+    padding:20px;
+}
+
+#ck-button label input {
+    position:absolute;
+    top:-20px;
+}
+
+#ck-button input:hover + span {
+    background-color:none;
+}
+
+#ck-button input:checked + span {
+    background-color:none;
+    color:#fff;
+}
+
+#ck-button input:checked:hover + span {
+    background-color:#fff;
+    color:@brand-primary;
 }

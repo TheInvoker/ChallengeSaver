@@ -8,7 +8,6 @@
 				<li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">HOME</a></li>
 				<li ng-class="{active: $state.includes('reports')}"><a ui-sref="reports">REPORTS</a></li>
 				<li><a ui-sref="login">LOGOUT</a></li>
-				<li><a href="http://www.strapui.com">MORE PREMIUM THEME</a></li>
 			</ul>
 		</div>
 	</snap-drawer>
@@ -22,16 +21,29 @@
 		</a>
 		
 		<div class="fr">
-		<h2>Reports <small>Work with Chart.js and D3</small></h2>
+		<h3>Settings and Preferences</h3>
 		</div>
-		<span class="glyphicon glyphicon-dashboard bg-fade"></span>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>Add Charts here</h1>
-				<p>You can use C3.js or Chart.js</p>
-				<p>
-					<a class="btn btn-primary btn-lg btn-white" ui-sref="overview">Back to Overview</a>
-				</p>
+				<h2 class="seperator-title">Preferences</h2>
+				<div class="preferences">
+					<ul class="pref-icons">
+						<li class="cat-icons">
+							<div id="ck-button">
+							   <label>
+							      <input type="checkbox" name="test" value="1"><span>Category 1</span>
+							   </label>
+							</div>
+						</li>
+						<li class="cat-icons">
+							<div id="ck-button">
+							   <label>
+							      <input type="checkbox" name="test" value="1"><span>Category 1</span>
+							   </label>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</snap-content>	
