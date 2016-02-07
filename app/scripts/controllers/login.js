@@ -8,11 +8,12 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('LoginCtrl', function($scope, $location) {
+  .controller('LoginCtrl', function($scope, $location,$state) {
 
     $scope.submit = function() {
-
-      $location.path('/dashboard');
+        $scope.$state = $state;
+        $state.transitionTo('connectaccounts', {arg:'arg'});
+      //$location.path('/dashboard/overview');
 
 
       return false;

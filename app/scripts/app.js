@@ -49,5 +49,11 @@
         controller: 'JoinCtrl',
         templateUrl: 'views/dashboard/join.html'
     })
+        .state('connectaccounts', {
+            url: '/connectaccounts',
+            parent: 'base',
+            controller: 'ConnectaccountsCtrl',
+            templateUrl: 'views/dashboard/connectaccounts.html'
+        })
    
 });
